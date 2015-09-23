@@ -9,4 +9,3 @@ require './app/models/tag'
 require './app/models/user'
 
 DataMapper.finalize
-DataMapper.auto_upgrade!
