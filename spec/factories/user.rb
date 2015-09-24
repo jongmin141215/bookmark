@@ -1,3 +1,4 @@
+require 'factory_girl'
 FactoryGirl.define do
   factory :user do
     email 'foo@bar.com'

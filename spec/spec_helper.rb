@@ -4,6 +4,7 @@ require './app/app'
 require './app/data_mapper_setup'
 require 'database_cleaner'
 require 'factory_girl'
+FactoryGirl.find_definitions
 
 Capybara.app = BookmarkManager
 
@@ -23,5 +24,6 @@ RSpec.configure do |config|
   end
 
   config.include FactoryGirl::Syntax::Methods
+
 
 end

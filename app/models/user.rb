@@ -8,7 +8,7 @@ class User
   property :id, Serial
   property :email, String, required: true
   property :password_digest, Text
-
+  validates_uniqueness_of :email
   validates_confirmation_of :password
   def password=(password)
     @password = password
