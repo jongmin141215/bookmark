@@ -59,6 +59,6 @@ feature 'User sign in' do
     visit '/sessions/new'
     fill_in 'email', with: email
     fill_in 'password', with: password
-    click_button 'Log in'
+    click_button 'Sign in'
   end
 end

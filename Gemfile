@@ -13,5 +13,6 @@ group :test do
   gem 'launchy'
   gem 'rspec'
   gem 'capybara'
+  gem 'byebug'
 end
 # gem "rails"
