@@ -3,6 +3,7 @@ require 'capybara/rspec'
 require './app/app'
 require './app/data_mapper_setup'
 require 'database_cleaner'
+require 'factory_girl'
 
 Capybara.app = BookmarkManager
 
@@ -20,5 +21,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.include FactoryGirl::Syntax::Methods
 
 end
