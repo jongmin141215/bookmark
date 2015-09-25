@@ -10,7 +10,11 @@ class BookmarkManager < Sinatra::Base
 
   helpers do
     def current_user
-      @current_user = User.get(session[:user_id])
+      @current_user ||= User.get(session[:user_id])
+    end
+
+    def generate_password_token
+      SecureRandom.urlsafe_base64
     end
   end
 
@@ -73,8 +77,32 @@ class BookmarkManager < Sinatra::Base
 
   delete '/sessions' do
     session[:user_id] = nil
-    flash.next[:notice] = 'goodbye!'
+    flash[:notice] = 'goodbye!'
     redirect to('/sessions/new')
   end
 
+  get '/password_reset' do
+    erb :'users/email_verification'
+  end
+
+  post '/password_reset' do
+    user = User.first(email: params[:email])
+    if user
+      user.password_token = generate_password_token
+      user.save
+      flash[:notice] = 'Check your emails'
+      redirect to('/password_reset')
+    else
+      flash[:notice] = 'Email does not exist'
+      redirect to('/password_reset')
+    end
+  end
+
+  get "/password_reset" do
+    erb :'users/password_reset'
+  end
+
+  get "/users/password_reset/:password_token" do
+    erb :'users/password_reset'
+  end
 end

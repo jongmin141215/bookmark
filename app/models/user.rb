@@ -8,6 +8,8 @@ class User
   property :id, Serial
   property :email, String, required: true
   property :password_digest, Text
+  property :password_token, Text
+
   validates_uniqueness_of :email
   validates_confirmation_of :password
   def password=(password)
