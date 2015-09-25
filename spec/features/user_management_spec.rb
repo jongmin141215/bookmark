@@ -1,13 +1,5 @@
 feature 'User sign up' do
 
-  def sign_up(user)
-    visit '/users/new'
-    fill_in :email, with: user.email
-    fill_in :password, with: user.password
-    fill_in :password_confirmation, with: user.password_confirmation
-    click_button 'Sign up'
-  end
-
   scenario 'I can sign up as a new user' do
     user = build(:user)
     expect { sign_up(user) }.to change(User, :count).by(1)
@@ -54,11 +46,19 @@ feature 'User sign in' do
     sign_in(email: user.email, password: user.password)
     expect(page).to have_content "Welcome, #{user.email}"
   end
+end
 
-  def sign_in(email:, password:)
-    visit '/sessions/new'
-    fill_in 'email', with: email
-    fill_in 'password', with: password
-    click_button 'Sign in'
+feature 'User signs out' do
+  before(:each) do
+    User.create(email: 'test@test.com',
+                password: 'test',
+                password_confirmation: 'test')
+  end
+
+  scenario 'while being signed in' do
+    sign_in(email: 'test@test.com', password: 'test')
+    click_button 'Sign out'
+    expect(page).to have_content('goodbye!')
+    expect(page).not_to have_content('Welcome, test@test.com')
   end
 end
